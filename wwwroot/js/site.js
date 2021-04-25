@@ -62,7 +62,9 @@ function validation(type) {
             }
             break;
         case "submit":
-            if ($("input:empty").filter('[required]:visible').length != 0) return false;
+            return $("input").filter('[required]:visible').filter(function () {
+                return $.trim($(this).val()).length == 0
+            }).length == 0
             break;
     }
 }
