@@ -9,5 +9,6 @@ namespace Cadastro_Pessoa.Models.Contracts
     public interface IDadosCadastroRepository
     {
         Task InsertDadosCadastro(DadosCadastro dados);
+        Task<List<DadosCadastro>> GetDadosCadastro();
     }
 }

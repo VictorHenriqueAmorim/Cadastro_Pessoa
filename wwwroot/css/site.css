@@ -10,3 +10,10 @@
 .h-70 {
     height: 70% !important;
 }
+
+.btn-registro {
+    position: absolute;
+    width: 120px !important;
+    height: 50px;
+    margin-top: 8px;
+}

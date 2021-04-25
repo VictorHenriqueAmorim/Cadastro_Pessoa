@@ -1,6 +1,7 @@
 ﻿using Cadastro_Pessoa.Models.Contracts;
 using Cadastro_Pessoa.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Cadastro_Pessoa.Controllers
@@ -16,6 +17,10 @@ namespace Cadastro_Pessoa.Controllers
         {
             await _repository.InsertDadosCadastro(dados);
             return View();
+        }
+        [HttpGet]
+        public async Task<List<DadosCadastro>> Get([FromServices] IDadosCadastroRepository _repository) {
+            return  await _repository.GetDadosCadastro();
         }
     }
 }

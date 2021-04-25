@@ -61,6 +61,9 @@ function validation(type) {
                 return alert("Cadastro de pessoa física permitida apenas para maiores de 18 anos.");
             }
             break;
+        case "submit":
+            if ($("input:empty").filter('[required]:visible').length != 0) return false;
+            break;
     }
 }
 function buttonAction(x) {
@@ -68,6 +71,7 @@ function buttonAction(x) {
     switch (x) {
         case "pf":
             $("#tipopessoa").removeClass("d-flex").addClass("d-none");
+            $("#botaomodal").addClass("d-none");
             $("#formcadastro").removeClass("d-none").addClass("d-flex");
             $("#pessoajuridica").addClass("d-none");
             $("#pessoafisica").removeClass("d-none");
@@ -77,6 +81,7 @@ function buttonAction(x) {
 
         case "pj":
             $("#tipopessoa").removeClass("d-flex").addClass("d-none");
+            $("#botaomodal").addClass("d-none");
             $("#formcadastro").removeClass("d-none").addClass("d-flex");
             $("#pessoafisica").addClass("d-none");
             $("#pessoajuridica").removeClass("d-none");
@@ -84,8 +89,16 @@ function buttonAction(x) {
             $("#pessoajuridica input").attr("required", true);
             $("#formcadastro input").val("");
             break;
-
+        case "togglepf":
+            $("#tabelapf").removeClass("d-none");
+            $("#tabelapj").addClass("d-none");
+            break;
+        case "togglepj":
+            $("#tabelapf").addClass("d-none");
+            $("#tabelapj").removeClass("d-none");
+            break;
         case "voltar":
+            $("#botaomodal").removeClass("d-none");
             $("#formcadastro").removeClass("d-flex").addClass("d-none");
             $("#tipopessoa").removeClass("d-none").addClass("d-flex");
             $("#formcadastro input").val("");
@@ -93,11 +106,34 @@ function buttonAction(x) {
     }
 }
 function save() {
+    if (!validation("submit")) return alert("Preencha todos os campos obrigatórios!");
     $.ajax({
         type: "POST",
         url: "/Cadastro/Post",
         data: $("#dados").serializeArray(),
         success: function () {
+            alert("Dados inseridos com sucesso!")
+        },
+        error: function () {
+            alert("Erro ao inserir os dados!")
+        }
+    });
+}
+function populateTable() {
+    $("#registro #info").remove();
+    $("#registro").modal('show');
+    $.ajax({
+        type: "GET",
+        url: "/Cadastro/Get",
+        success: function (x) {
+            x.filter(x => x.cpf != null).map((x) => {
+                $("#tabelapf tr:first").after(`<tr id="info"><td>${x.nome} ${x.sobrenome}</td>
+                                               <td>${x.cpf}</td></tr>`)
+            })
+            x.filter(x => x.cnpj != null).map((x) => {
+                $("#tabelapj tr:first").after(`<tr id="info"><td>${x.razaoSocial}</td>
+                                               <td>${x.cnpj}</td></tr>`)
+            })
 
         },
         error: function () {
