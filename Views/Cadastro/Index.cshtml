@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@section scripts{
+    <script src="~/js/site.js"></script>
+}
+<div class="w-40 h-70 d-flex justify-content-center bg-light rounded">
+    <div id="tipopessoa" class="d-flex justify-content-between align-items-center w-50">
+            <button type="button" class="btn btn-success shadow-sm btn-lg-175 w-45" onclick="buttonAction('pf')">Pessoa Física</button>
+            <button type="button" class="btn btn-success shadow-sm btn-lg-175 w-45"  onclick="buttonAction('pj')">Pessoa Jurídica</button>
+    </div>
+    <div id="formcadastro" class="d-none align-items-center">
+        <form id="dados" name="dados" method="post">
+            <h1>Cadastro</h1>
+            <div id="pessoafisica">
+                <div class="form-row mt-2">
+                    <div class="col-4">
+                        <label for="nome">Nome<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="nome" name="Nome" placeholder="Nome" >
+                    </div>
+                    <div class="col-4">
+                        <label for="sobrenome">Sobrenome<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="sobrenome" name="Sobrenome" placeholder="Sobrenome"  required>
+                    </div>
+                </div>
+                <div class="form-row mt-2">
+                    <div class="col-3">
+                        <label for="cpf">CPF<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="cpf" name="CPF" placeholder="CPF" oninput="format(this, 'cpf')" onblur="validation('cpf')"  required>
+                    </div>
+                    <div>
+                        <label for="datadenascimento">Data de Nascimento<span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" id="datadenascimento" name="DataNascimento" placeholder="Data de Nascimento" max="2999-12-31" onblur="validation('idade')" required>
+                    </div>
+                </div>
+            </div>
+            <div id="pessoajuridica">
+                <div class="form-row mt-2">
+                    <div class="col-4">
+                        <label for="razaosocial">Razão Social<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="razaosocial" name="RazaoSocial" placeholder="Razão Social" required>
+                    </div>
+                    <div class="col-4">
+                        <label for="nomefantasia">Nome Fantasia<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="nomefantasia" name="NomeFantasia" placeholder="Nome Fantasia" required>
+                    </div>
+                </div>
+                <div class="form-row mt-2">
+                    <div class="col-4">
+                        <label for="cnpj">CNPJ<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="cnpj" name="CNPJ" placeholder="CNPJ" oninput="format(this, 'cnpj')" onblur="validation('cnpj')" required>
+                    </div>
+                </div>
+            </div>
+            <div id="endereco">
+                <div class="form-row mt-2">
+                    <div class="col-2">
+                        <label for="cep">CEP<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="cep" name="CEP" maxlength="8" placeholder="CEP" onblur="getcep(this.value)" onpaste="return false;" required>
+                    </div>
+                </div>
+                <div class="form-row mt-2">
+                    <div class="col-6">
+                        <label for="logradouro">Logradouro<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="logradouro" name="Logradouro" placeholder="Rua, Avenida, etc..." required>
+                    </div>
+                    <div class="col-2">
+                        <label for="numero">Numero<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="numero" name="Numero" placeholder="Numero" required>
+                    </div>
+                    <div class="col-3">
+                        <label for="complemento">Complemento</label>
+                        <input type="text" class="form-control" id="complemento" name="Complemento" placeholder="Apto, Bloco, etc...">
+                    </div>
+                </div>
+                <div class="form-row mt-2">
+                    <div class="col-3">
+                        <label for="bairro">Bairro<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="bairro" name="Bairro" placeholder="Bairro" required>
+                    </div>
+                    <div class="col-3">
+                        <label for="cidade">Cidade<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="cidade" name="Cidade" placeholder="Cidade" required>
+                    </div>
+
+                    <div>
+                        <label for="uf">UF<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control w-25" id="uf" name="UF" placeholder="UF" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row d-flex justify-content-between mt-5">
+                <button type="button" class="btn btn-danger" onclick="buttonAction('voltar')">Voltar</button>
+                <button type="submit" class="btn btn-success" onclick="save()">Registrar</button>
+            </div>
+        </form>
+    </div>
+</div>
