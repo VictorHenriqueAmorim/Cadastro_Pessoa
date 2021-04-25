@@ -1,10 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Cadastro_Pessoa.Database;
+using Cadastro_Pessoa.Models.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +23,8 @@ namespace Cadastro_Pessoa
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<Context>(opt => opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IDadosCadastroRepository, DadosCadastroRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +51,7 @@ namespace Cadastro_Pessoa
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Cadastro}/{action=Index}/{id?}");
             });
         }
     }
